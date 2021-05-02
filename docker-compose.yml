@@ -1,0 +1,22 @@
+version: '3.2'
+
+networks:
+  atom-network:
+    driver: bridge
+
+volumes:
+  es-volume:
+
+services:
+  db:
+    image: postgres:13.2
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: atom_es
+    volumes:
+      - es-volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - atom-network
