@@ -1,5 +1,6 @@
 package pl.atom.atomes.bankAccount.domain;
 
+import org.springframework.stereotype.Component;
 import pl.atom.atomes.bankAccount.dto.BankAccountReadModel;
 import pl.atom.atomes.bankAccount.dto.Result;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import java.util.function.Function;
 
+@Component
 public class BankFacade {
 
     private final BankAccountRepository repository;

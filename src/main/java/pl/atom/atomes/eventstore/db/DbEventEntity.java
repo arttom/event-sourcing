@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
-public class DbEventEntity {
+class DbEventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

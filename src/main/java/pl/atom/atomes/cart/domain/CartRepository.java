@@ -1,19 +1,20 @@
 package pl.atom.atomes.cart.domain;
 
+import org.springframework.stereotype.Component;
 import pl.atom.atomes.aggregate.DomainEvent;
 import pl.atom.atomes.eventstore.EventStore;
 
 import java.util.List;
 import java.util.UUID;
 
+@Component
 class CartRepository {
 
     private final EventStore eventStore;
-    private final CartEventMapper eventMapper;
+    private final CartEventMapper eventMapper = new CartEventMapper();
 
-    CartRepository(EventStore eventStore, CartEventMapper eventMapper) {
+    CartRepository(EventStore eventStore) {
         this.eventStore = eventStore;
-        this.eventMapper = eventMapper;
     }
 
     public Cart get(UUID id) {

@@ -1,6 +1,9 @@
+server:
+  port: 7075
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/atom_es
+    url: jdbc:postgresql://localhost:5436/atom_es
     username: root
     password: root
     driver-class-name: org.postgresql.Driver
@@ -10,3 +13,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  swagger-ui:
+    doc-expansion: none
+  api-docs:
+    path: /swagger-ui.html

@@ -1,20 +1,21 @@
 package pl.atom.atomes.bankAccount.domain;
 
+import org.springframework.stereotype.Component;
 import pl.atom.atomes.aggregate.DomainEvent;
 import pl.atom.atomes.eventstore.EventStore;
 
 import java.util.List;
 import java.util.UUID;
 
+@Component
 class BankAccountRepository {
 
     private final EventStore eventStore;
-    private final BankAccountEventMapper eventMapper;
+    private final BankAccountEventMapper eventMapper = new BankAccountEventMapper();
     private final BankAccountSnapshotRepository snapshotRepository;
 
-    public BankAccountRepository(EventStore eventStore, BankAccountEventMapper eventMapper, BankAccountSnapshotRepository snapshotRepository) {
+    public BankAccountRepository(EventStore eventStore, BankAccountSnapshotRepository snapshotRepository) {
         this.eventStore = eventStore;
-        this.eventMapper = eventMapper;
         this.snapshotRepository = snapshotRepository;
     }
 

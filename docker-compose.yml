@@ -17,6 +17,6 @@ services:
     volumes:
       - es-volume:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5436:5432
     networks:
       - atom-network

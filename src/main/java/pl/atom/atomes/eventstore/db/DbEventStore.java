@@ -1,5 +1,7 @@
 package pl.atom.atomes.eventstore.db;
 
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.atom.atomes.aggregate.DomainEvent;
 import pl.atom.atomes.eventstore.EventMapper;
 import pl.atom.atomes.eventstore.EventStore;
@@ -8,7 +10,8 @@ import pl.atom.atomes.eventstore.PersistentEvent;
 import java.util.List;
 import java.util.UUID;
 
-public class DbEventStore implements EventStore {
+@Component
+class DbEventStore implements EventStore {
 
     private final DbEventEntityRepository repository;
 
@@ -17,6 +20,7 @@ public class DbEventStore implements EventStore {
     }
 
     @Override
+    @Transactional
     public List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, EventMapper mapper) {
         return repository.findAllByAggregateIdAsStream(aggregateId)
                 .map(DbEventEntity::toPersistentEntity)
@@ -25,6 +29,7 @@ public class DbEventStore implements EventStore {
     }
 
     @Override
+    @Transactional
     public List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, Long fromVersion, EventMapper mapper) {
         return repository.findByAggregateIdAndFromVersionAsStream(aggregateId, fromVersion)
                 .map(DbEventEntity::toPersistentEntity)
