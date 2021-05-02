@@ -2,11 +2,9 @@ package pl.atom.atomes.cart.domain;
 
 import pl.atom.atomes.aggregate.DomainEvent;
 import pl.atom.atomes.eventstore.EventStore;
-import pl.atom.atomes.eventstore.PersistentEvent;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 class CartRepository {
 
@@ -19,18 +17,12 @@ class CartRepository {
     }
 
     public Cart get(UUID id) {
-        List<DomainEvent> events = eventStore.getAggregateEvents(id)
-                .stream()
-                .map(eventMapper::toDomainEvent)
-                .collect(Collectors.toList());
+        List<DomainEvent> events = eventStore.getAggregateDomainEvents(id, eventMapper);
         return Cart.rebuild(id, events);
     }
 
     public void save(Cart cart) {
-        List<PersistentEvent> pendingEvents = cart.getPendingEvents()
-                .stream()
-                .map(eventMapper::toPersistentEvent)
-                .collect(Collectors.toList());
-        eventStore.save(pendingEvents);
+        List<DomainEvent> pendingEvents = cart.getPendingEvents();
+        eventStore.save(pendingEvents, eventMapper);
     }
 }

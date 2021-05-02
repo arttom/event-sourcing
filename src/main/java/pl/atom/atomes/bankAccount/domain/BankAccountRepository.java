@@ -5,7 +5,6 @@ import pl.atom.atomes.eventstore.EventStore;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 class BankAccountRepository {
 
@@ -23,10 +22,7 @@ class BankAccountRepository {
         BankAccountSnapshot snapshot = snapshotRepository.findSnapshot(id)
                 .orElse(new BankAccountSnapshot(id));
         List<DomainEvent> aggregateEvents = eventStore
-                .getAggregateEvents(id, snapshot.getVersion())
-                .stream()
-                .map(eventMapper::toDomainEvent)
-                .collect(Collectors.toList());
+                .getAggregateDomainEvents(id, snapshot.getVersion(), eventMapper);
         BankAccount bankAccount = new BankAccount(id);
         bankAccount.rebuild(snapshot, aggregateEvents);
         return bankAccount;
@@ -37,9 +33,8 @@ class BankAccountRepository {
             BankAccountSnapshot snapshot = BankAccountSnapshot.fromBankAccount(bankAccount);
             snapshotRepository.save(snapshot);
         }
+
         bankAccount.getPendingEvents()
-                .stream()
-                .map(eventMapper::toPersistentEvent)
-                .forEach(eventStore::save);
+                .forEach(event -> eventStore.save(event, eventMapper));
     }
 }

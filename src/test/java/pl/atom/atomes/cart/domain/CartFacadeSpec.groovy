@@ -10,7 +10,7 @@ class CartFacadeSpec extends Specification {
 
     def "should create"() {
         given:
-            UUID id = UUID.randomUUID();
+            UUID id = UUID.randomUUID()
         when:
             facade.create(id)
         and:
@@ -21,7 +21,7 @@ class CartFacadeSpec extends Specification {
 
     def "cannot create twice"() {
         given:
-            UUID id = UUID.randomUUID();
+            UUID id = UUID.randomUUID()
         when:
             facade.create(id)
         then:
@@ -35,8 +35,8 @@ class CartFacadeSpec extends Specification {
 
     def "cannot add to not created"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         when:
             facade.addItem(cartId, itemId)
         then:
@@ -46,8 +46,8 @@ class CartFacadeSpec extends Specification {
 
     def "should add item"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         when:
@@ -62,8 +62,8 @@ class CartFacadeSpec extends Specification {
 
     def "should add twice"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         when:
@@ -86,8 +86,8 @@ class CartFacadeSpec extends Specification {
 
     def "should submit"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -106,8 +106,8 @@ class CartFacadeSpec extends Specification {
 
     def "should reject adding more than 10"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         when:
@@ -127,8 +127,8 @@ class CartFacadeSpec extends Specification {
 
     def "should reject adding to submitted"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -144,8 +144,8 @@ class CartFacadeSpec extends Specification {
 
     def "should reject submit submitted"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -161,8 +161,8 @@ class CartFacadeSpec extends Specification {
 
     def "should subtract item"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -180,8 +180,8 @@ class CartFacadeSpec extends Specification {
 
     def "should remove if would be empty"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -196,8 +196,8 @@ class CartFacadeSpec extends Specification {
 
     def "should remove item if would be empty"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
             UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
@@ -217,8 +217,8 @@ class CartFacadeSpec extends Specification {
 
     def "should remove when set to 0"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -233,8 +233,8 @@ class CartFacadeSpec extends Specification {
 
     def "should remove when set to 0 from 2"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -250,9 +250,9 @@ class CartFacadeSpec extends Specification {
 
     def "should remove position when set to 0"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
-            UUID item2Id = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
+            UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -272,8 +272,8 @@ class CartFacadeSpec extends Specification {
 
     def "should reject subtract without add"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         when:
@@ -285,9 +285,9 @@ class CartFacadeSpec extends Specification {
 
     def "should reject subtract item not in cart"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
-            UUID item2Id = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
+            UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -301,9 +301,9 @@ class CartFacadeSpec extends Specification {
 
     def "should change item count"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
-            UUID item2Id = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
+            UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -324,8 +324,8 @@ class CartFacadeSpec extends Specification {
 
     def "should reject set negative"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -340,9 +340,9 @@ class CartFacadeSpec extends Specification {
 
     def "should reject set empty when not in cart"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
-            UUID item2Id = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
+            UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -357,9 +357,9 @@ class CartFacadeSpec extends Specification {
 
     def "should add with set"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
-            UUID item2Id = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
+            UUID item2Id = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -377,8 +377,8 @@ class CartFacadeSpec extends Specification {
     }
     def "should reject set more than max"() {
         given:
-            UUID cartId = UUID.randomUUID();
-            UUID itemId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
+            UUID itemId = UUID.randomUUID()
         and:
             facade.create(cartId)
         and:
@@ -392,7 +392,7 @@ class CartFacadeSpec extends Specification {
 
     def "should reject empty submit"() {
         given:
-            UUID cartId = UUID.randomUUID();
+            UUID cartId = UUID.randomUUID()
         and:
             facade.create(cartId)
         when:

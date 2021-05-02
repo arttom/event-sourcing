@@ -7,11 +7,10 @@ import java.util.UUID;
 
 public interface EventStore {
 
-    List<PersistentEvent> getAggregateEvents(UUID aggregateId);
+    List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, EventMapper mapper);
+    List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, Long fromVersion, EventMapper mapper);
 
-    List<PersistentEvent> getAggregateEvents(UUID aggregateId, Long fromVersion);
+    void save(DomainEvent event, EventMapper mapper);
 
-    void save(PersistentEvent event);
-
-    void save(List<PersistentEvent> pendingEvents);
+    void save(List<DomainEvent> pendingEvents, EventMapper mapper);
 }

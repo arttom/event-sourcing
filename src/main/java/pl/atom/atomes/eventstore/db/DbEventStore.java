@@ -1,11 +1,12 @@
 package pl.atom.atomes.eventstore.db;
 
+import pl.atom.atomes.aggregate.DomainEvent;
+import pl.atom.atomes.eventstore.EventMapper;
 import pl.atom.atomes.eventstore.EventStore;
 import pl.atom.atomes.eventstore.PersistentEvent;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class DbEventStore implements EventStore {
 
@@ -16,23 +17,33 @@ public class DbEventStore implements EventStore {
     }
 
     @Override
-    public List<PersistentEvent> getAggregateEvents(UUID aggregateId) {
-        return repository.findByAggregateId(aggregateId)
-                .stream()
+    public List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, EventMapper mapper) {
+        return repository.findAllByAggregateIdAsStream(aggregateId)
                 .map(DbEventEntity::toPersistentEntity)
-                .collect(Collectors.toList());
+                .map(mapper::toDomainEvent)
+                .toList();
     }
 
     @Override
-    public List<PersistentEvent> getAggregateEvents(UUID aggregateId, Long fromVersion) {
-        return repository.findByAggregateIdAndFromVersion(aggregateId, fromVersion)
-                .stream()
+    public List<DomainEvent> getAggregateDomainEvents(UUID aggregateId, Long fromVersion, EventMapper mapper) {
+        return repository.findByAggregateIdAndFromVersionAsStream(aggregateId, fromVersion)
                 .map(DbEventEntity::toPersistentEntity)
-                .collect(Collectors.toList());
+                .map(mapper::toDomainEvent)
+                .toList();
     }
 
     @Override
-    public void save(PersistentEvent event) {
+    public void save(DomainEvent event, EventMapper mapper) {
+        save(mapper.toPersistentEvent(event));
+    }
+    @Override
+    public void save(List<DomainEvent> pendingEvents, EventMapper mapper) {
+        save(
+                pendingEvents.stream().map(mapper::toPersistentEvent).toList()
+        );
+    }
+
+    private void save(PersistentEvent event) {
         DbEventEntity eventEntity = new DbEventEntity()
                 .setAggregateId(event.aggregateId())
                 .setPayload(event.payload())
@@ -41,15 +52,14 @@ public class DbEventStore implements EventStore {
         repository.save(eventEntity);
     }
 
-    @Override
-    public void save(List<PersistentEvent> pendingEvents) {
+    private void save(List<PersistentEvent> pendingEvents) {
         List<DbEventEntity> dbEvents = pendingEvents.stream()
                 .map(pe -> new DbEventEntity()
                         .setAggregateId(pe.aggregateId())
                         .setPayload(pe.payload())
                         .setType(pe.type())
                         .setVersion(pe.version()))
-                .collect(Collectors.toList());
+                .toList();
         repository.saveAll(dbEvents);
     }
 }

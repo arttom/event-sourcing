@@ -20,7 +20,7 @@ class BankFacadeSpec extends Specification {
             facade.open(id)
             def account = facade.get(id)
         then:
-            account.balance() == 0.0;
+            account.balance() == 0.0
     }
 
     def "should credit"() {
