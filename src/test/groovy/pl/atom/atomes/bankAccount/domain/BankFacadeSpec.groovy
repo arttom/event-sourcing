@@ -10,7 +10,7 @@ class BankFacadeSpec extends Specification {
     BankAccountSnapshotRepository snapshotRepository = new InMemorySnapshotRepository()
 
     @Subject
-    BankFacade facade = new BankFacade(new BankAccountRepository(new InMemoryEventStore(), new BankAccountEventMapper(), snapshotRepository))
+    BankFacade facade = new BankFacade(new BankAccountRepository(new InMemoryEventStore(), snapshotRepository))
 
 
     def "should open"() {

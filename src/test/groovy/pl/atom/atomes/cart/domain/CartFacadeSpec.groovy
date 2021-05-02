@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class CartFacadeSpec extends Specification {
 
-    CartFacade facade = new CartFacade(new CartRepository(new InMemoryEventStore(), new CartEventMapper()))
+    CartFacade facade = new CartFacade(new CartRepository(new InMemoryEventStore()))
 
     def "should create"() {
         given:
